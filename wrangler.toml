@@ -1,0 +1,19 @@
+name = "rr-defence-payment-api"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+# Release stays CLOSED until authentication, D1, policy and payment testing are complete.
+[vars]
+SITE_ORIGIN = "https://rrdefenceacademy2-create.github.io"
+FIREBASE_PROJECT_ID = "CHANGE_ME_AFTER_FIREBASE_SETUP"
+RAZORPAY_MODE = "test"
+PAYMENTS_ENABLED = "false"
+PLAY_PURCHASES_ENABLED = "false"
+POLICIES_READY = "false"
+
+# Must replace database_id with actual UUID from Cloudflare D1 console before enabling builds.
+[[d1_databases]]
+binding = "DB"
+database_name = "rr-defence-db"
+database_id = "REPLACE_WITH_REAL_D1_DATABASE_ID"
