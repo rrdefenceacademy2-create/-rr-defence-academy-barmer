@@ -16,4 +16,4 @@ POLICIES_READY = "false"
 [[d1_databases]]
 binding = "DB"
 database_name = "rr-defence-db"
-database_id = "REPLACE_WITH_REAL_D1_DATABASE_ID"
+database_id = database_id = "8291d4b0-db38-461a-949a-148339732ce8"
