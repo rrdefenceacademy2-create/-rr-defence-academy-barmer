@@ -1,0 +1,40 @@
+name: Build RRDA Public Test APK
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v4
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+      - name: Install Android platform
+        run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0'
+      - name: Extract public app project
+        run: |
+          for f in RRDA_Android_Public_App_New_Link.zip RRDA_PUBLIC_PLAYSTORE_V2_ANDROID_SOURCE_AND_CBT_PAGE.zip; do
+            if [ -f "$f" ]; then
+              unzip -q "$f"
+              break
+            fi
+          done
+          test -f RRDA_PUBLIC_PLAYSTORE_V2_PROJECT/app/build.gradle.kts
+      - name: Build test APK
+        working-directory: RRDA_PUBLIC_PLAYSTORE_V2_PROJECT
+        run: gradle --no-daemon :app:assembleDebug
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: RRDA-Public-Test-APK
+          path: RRDA_PUBLIC_PLAYSTORE_V2_PROJECT/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
