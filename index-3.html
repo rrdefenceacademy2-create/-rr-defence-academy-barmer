@@ -68,7 +68,7 @@ function render(){
 function jump(i){current=Math.min(49,Math.max(0,i));render();scrollTo({top:0,behavior:'smooth'})}
 function finish(automatic=false){
   if($('exam').classList.contains('hide'))return;
-  if(!automatic && !confirm('टेस्ट जमा करें? जमा करने के बाद वर्तमान प्रयास का परिणाम दिखेगा।'))return;
+  if(!automatic && $('submit').dataset.confirm!=='yes'){$('submit').dataset.confirm='yes';$('submit').textContent='हाँ, टेस्ट जमा करें';return;}
   if(ticker)clearInterval(ticker);
   const correct=selected.reduce((n,x,i)=>n+Number(x===QUESTIONS[i].answer),0);
   lastResult={correct,selected:[...selected],at:new Date().toISOString()};
